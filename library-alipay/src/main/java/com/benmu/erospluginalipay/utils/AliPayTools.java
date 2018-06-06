@@ -53,6 +53,14 @@ public class AliPayTools {
 
         String orderInfo = aliPayModel.getAuthInfo();
         if(TextUtils.isEmpty(orderInfo)) {
+            String privateKey = aliPayModel.getPrivateKey();
+            String sign  = aliPayModel.getSign();
+
+            if(TextUtils.isEmpty(sign)&&TextUtils.isEmpty(privateKey)) {
+                Toast.makeText(activity, "支付参数不能为空！", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Map<String, String> params = AliPayOrderInfoUtil.buildOrderParamMap(aliPayModel.getAppId(),
                     aliPayModel.getRsa2(), aliPayModel.getOutTradeNo(),
                     aliPayModel.getName(), aliPayModel.getMoney(),
@@ -60,8 +68,7 @@ public class AliPayTools {
 
             String orderParam = AliPayOrderInfoUtil.buildOrderParam(params);
 
-            String privateKey = aliPayModel.getPrivateKey();
-            String sign  = aliPayModel.getSign();
+
 
             if(TextUtils.isEmpty(sign)) {
                 if(TextUtils.isEmpty(privateKey)) {
