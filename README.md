@@ -1,7 +1,7 @@
 # eros-plugin-android-alipay
 > Eros Android AliPay Plugin
 
-####使用说明
+#### 使用说明
 ```
  var bmAliPay = weex.requireModule('bmAliPay');
 
