@@ -4,6 +4,8 @@
 >
 > Eros Android端 支付宝支付插件
 
+[![](https://jitpack.io/v/HirahKong/eros-plugin-android-alipay.svg)](https://jitpack.io/#HirahKong/eros-plugin-android-alipay)
+
 #### 使用示例
 
 > 服务端远程加签 ，签名生成规则参照：[使用应用私钥生成请求签名](https://docs.open.alipay.com/291/105974) 
