@@ -16,8 +16,9 @@ public class AliPayModel {
     private String name;//商品名称
     private String detail;//商品描述详情 (用于显示在 支付宝 的交易记录里)
     private String timestamp;//发送请求的时间，格式"yyyy-MM-dd HH:mm:ss"
-
     private Boolean isSandbox;//是否为沙箱模式，调试时使用
+
+    private String authInfo;//服务器签名后拼接的订单数据
 
     public AliPayModel() {
     }
@@ -118,5 +119,13 @@ public class AliPayModel {
 
     public void setSandbox(Boolean sandbox) {
         isSandbox = sandbox;
+    }
+
+    public String getAuthInfo() {
+        return authInfo;
+    }
+
+    public void setAuthInfo(String authInfo) {
+        this.authInfo = authInfo;
     }
 }

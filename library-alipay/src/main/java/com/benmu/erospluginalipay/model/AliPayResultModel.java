@@ -21,9 +21,9 @@ public class AliPayResultModel {
      * 6004	支付结果未知（有可能已经支付成功），请查询商户订单列表中订单的支付状态
      * 其它	其它支付错误
      */
-    public String resCode;//结果码(类型为字符串)
-    public String status;//处理结果(类型为json结构字符串)
-    public String msg;//描述信息
+    public String status;//结果码(类型为字符串)
+    public String data;//处理结果(类型为json结构字符串)
+    public String errorMsg;//描述信息
 
 
     public AliPayResultModel(Map<String, String> rawResult) {
@@ -33,21 +33,13 @@ public class AliPayResultModel {
 
         for (String key : rawResult.keySet()) {
             if (TextUtils.equals(key, "resultStatus")) {
-                resCode = rawResult.get(key);
-            } else if (TextUtils.equals(key, "result")) {
                 status = rawResult.get(key);
+            } else if (TextUtils.equals(key, "result")) {
+                data = rawResult.get(key);
             } else if (TextUtils.equals(key, "memo")) {
-                msg = rawResult.get(key);
+                errorMsg = rawResult.get(key);
             }
         }
-    }
-
-    public String getResCode() {
-        return resCode;
-    }
-
-    public void setResCode(String resCode) {
-        this.resCode = resCode;
     }
 
     public String getStatus() {
@@ -58,16 +50,24 @@ public class AliPayResultModel {
         this.status = status;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getData() {
+        return data;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
     @Override
     public String toString() {
-        return "AliPayResultModel{" + "resCode='" + resCode + '\'' + ", status='" + status + '\'' + ", msg='" + msg + '\'' + '}';
+        return "AliPayResultModel{" + "status='" + status + '\'' + ", data='" + data + '\'' + ", errorMsg='" + errorMsg + '\'' + '}';
     }
 }

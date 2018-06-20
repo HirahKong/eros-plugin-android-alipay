@@ -44,41 +44,50 @@ public class AliPayTools {
     };
 
     public static void aliPay(final Activity activity, AliPayModel aliPayModel, JSCallback callback) {
+        mCallback = callback;
 
         //沙箱调试模式
         if(aliPayModel.getSandbox()!=null&&aliPayModel.getSandbox()) {
             EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
         }
 
-        mCallback = callback;
+        String orderInfo = aliPayModel.getAuthInfo();
+        if(TextUtils.isEmpty(orderInfo)) {
+            String privateKey = aliPayModel.getPrivateKey();
+            String sign  = aliPayModel.getSign();
 
-        Map<String, String> params = AliPayOrderInfoUtil.buildOrderParamMap(aliPayModel.getAppId(),
-                aliPayModel.getRsa2(), aliPayModel.getOutTradeNo(),
-                aliPayModel.getName(), aliPayModel.getMoney(),
-                aliPayModel.getDetail(),aliPayModel.getTimestamp());
-
-        String orderParam = AliPayOrderInfoUtil.buildOrderParam(params);
-
-        String privateKey = aliPayModel.getPrivateKey();
-        String sign  = aliPayModel.getSign();
-
-        if(TextUtils.isEmpty(sign)) {
-            if(TextUtils.isEmpty(privateKey)) {
-                //sign 和 privateKey 必须有一个不为空
-                Toast.makeText(activity, "支付密钥不能为空！", Toast.LENGTH_SHORT).show();
+            if(TextUtils.isEmpty(sign)&&TextUtils.isEmpty(privateKey)) {
+                Toast.makeText(activity, "支付参数不能为空！", Toast.LENGTH_SHORT).show();
                 return;
             }
-            sign = AliPayOrderInfoUtil.getSign(params, privateKey, aliPayModel.getRsa2());
+
+            Map<String, String> params = AliPayOrderInfoUtil.buildOrderParamMap(aliPayModel.getAppId(),
+                    aliPayModel.getRsa2(), aliPayModel.getOutTradeNo(),
+                    aliPayModel.getName(), aliPayModel.getMoney(),
+                    aliPayModel.getDetail(),aliPayModel.getTimestamp());
+
+            String orderParam = AliPayOrderInfoUtil.buildOrderParam(params);
+
+
+
+            if(TextUtils.isEmpty(sign)) {
+                if(TextUtils.isEmpty(privateKey)) {
+                    //sign 和 privateKey 必须有一个不为空
+                    Toast.makeText(activity, "支付密钥不能为空！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                sign = AliPayOrderInfoUtil.getSign(params, privateKey, aliPayModel.getRsa2());
+            }
+            orderInfo = orderParam + "&" + sign;
         }
 
-        final String orderInfo = orderParam + "&" + sign;
-
+        final String finalOrderInfo = orderInfo;
         Runnable payRunnable = new Runnable() {
 
             @Override
             public void run() {
                 PayTask alipay = new PayTask(activity);
-                Map<String, String> result = alipay.payV2(orderInfo, true);
+                Map<String, String> result = alipay.payV2(finalOrderInfo, true);
 
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
