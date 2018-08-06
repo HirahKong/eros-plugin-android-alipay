@@ -8,9 +8,50 @@
 
 #### 依赖
 
+* 库依赖方式
 ```java
 dependencies {
        implementation 'com.github.HirahKong:eros-plugin-android-alipay:1.0.1'
+}
+```
+* 源码依赖方式<br/>
+
+1、进入Android目录工程目录`/platforms/android/WeexFrameworkWrapper/` 目录下 clone 对应的插件。
+```java
+       git clone https://github.com/bmfe/eros-plugin-android-alipay.git 'erospluginalipay'
+```
+
+2、打开Android目录工程目录`/platforms/android/WeexFrameworkWrapper/`,编辑`settings.gradle`,添加引入,在`settings.gradle` 中 添加如下代码。
+
+```java
+//这里只需要在最后添加 ,  ':erospluginalipay'
+include ':app',':sdk',':nexus', ':wxframework',':erospluginalipay'
+
+// 支付宝支付
+project(':erospluginalipay').projectDir = new File(settingsDir,'/erospluginalipay/library-alipay')
+```
+
+3、打开Android目录工程目录`/platforms/android/WeexFrameworkWrapper/app`,编辑app目录下`build.gradle `文件 `dependencies` 下添对应 插件引用。
+
+```java
+dependencies {
+		....
+       //支付宝支付
+       compile project(':erospluginalipay')
+	}
+```
+
+4、修改`/platforms/android/WeexFrameworkWrapper/erospluginalipay/library-alipay`目录下`build.gradle` 文件将`implementation 'com.github.bmfe.eros-nexus:nexus:1.0.3'` 修改成 `implementation project(':nexus')`
+
+```java
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    testImplementation 'junit:junit:4.12'
+    //implementation 'com.github.bmfe.eros-nexus:nexus:1.0.3'
+    implementation project(':nexus')
+    //支付宝依赖包
+    implementation files('libs/alipaySdk-20180403.jar')
 }
 ```
 
