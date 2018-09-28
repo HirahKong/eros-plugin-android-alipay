@@ -6,7 +6,7 @@
 
 [![](https://jitpack.io/v/HirahKong/eros-plugin-android-alipay.svg)](https://jitpack.io/#HirahKong/eros-plugin-android-alipay)
 
-#### 依赖
+### 依赖
 
 ```java
 dependencies {
@@ -14,7 +14,7 @@ dependencies {
 }
 ```
 
-#### 使用示例
+### 使用示例
 
 > 服务端远程加签 ，签名生成规则参照：[使用应用私钥生成请求签名](https://docs.open.alipay.com/291/105974) 
 
@@ -29,7 +29,34 @@ dependencies {
       })       
 ```
 
-#### 返回值
+
+
+###  支付调试
+
+1. 下载支付宝沙箱版客户端 [下载](https://sandbox.alipaydev.com/user/downloadWallet.htm)
+
+2. 获取沙箱账号，登录支付宝客户端 
+
+   1. 进入支付宝[开发者中心](https://openhome.alipay.com/platform/appDaily.htm?tab=account) - 沙箱环境 - 沙箱账号
+   2. 找到买家信息 - 登录支付宝客户端
+
+   ![image-20180928113831602](https://ws3.sinaimg.cn/large/006tNc79gy1fvp49gn945j31jo19a44l.jpg)
+
+
+3. 后台同学使用上传到支付宝的密钥生成签名后的数据
+
+   > 调试模式下则使用沙箱应用配置信息即可
+   >
+   > ![image-20180928115454972](https://ws3.sinaimg.cn/large/006tNc79gy1fvp49ihd97j31fm0vs43n.jpg)
+
+   1. 生成RSA密钥 [文档](https://docs.open.alipay.com/291/105971)
+   2. 上传公钥 [文档](https://docs.open.alipay.com/291/105972/)
+   3. 使用应用私钥生成请求签名 [文档](https://docs.open.alipay.com/291/105974/)
+
+4. 调用支付宝支付接口时设置属性isSandbox为true![image-20180928114034792](https://ws2.sinaimg.cn/large/006tNc79gy1fvp49hk1xyj311u0bewgi.jpg)
+
+
+### 返回值
 
 > 具体见：[App支付同步通知参数说明](https://docs.open.alipay.com/204/105302) 
 
@@ -60,26 +87,5 @@ dependencies {
 | timestamp    | String | 是       | 32       | 时间                                                         | 2016-10-11 17:43:36                                  |
 | code         | String | 是       | 16       | 结果码                                                       | [具体见](https://docs.open.alipay.com/common/105806) |
 
-####  支付调试
+#### 
 
-1. 下载支付宝沙箱版客户端 [下载](https://sandbox.alipaydev.com/user/downloadWallet.htm)
-
-2. 获取沙箱账号，登录支付宝客户端 
-
-   1. 进入支付宝[开发者中心](https://openhome.alipay.com/platform/appDaily.htm?tab=account) - 沙箱环境 - 沙箱账号
-   2. 找到买家信息 - 登录支付宝客户端
-
-   ![image-20180928113831602](/Users/haorui/Library/Application Support/typora-user-images/image-20180928113831602.png)
-
-
-3. 后台同学使用上传到支付宝的密钥生成签名后的数据
-
-   > 调试模式下则使用沙箱应用配置信息即可
-   >
-   > ![image-20180928115454972](/Users/haorui/Library/Application Support/typora-user-images/image-20180928115454972.png)
-
-   1. 生成RSA密钥 [文档](https://docs.open.alipay.com/291/105971)
-   2. 上传公钥 [文档](https://docs.open.alipay.com/291/105972/)
-   3. 使用应用私钥生成请求签名 [文档](https://docs.open.alipay.com/291/105974/)
-
-4. 调用支付宝支付接口时设置属性isSandbox为true![image-20180928114034792](/Users/haorui/Library/Application Support/typora-user-images/image-20180928114034792.png)
