@@ -5,11 +5,12 @@ import android.text.TextUtils;
 
 import com.benmu.erospluginalipay.model.AliPayModel;
 import com.benmu.erospluginalipay.utils.AliPayTools;
-import com.benmu.framework.adapter.router.RouterTracker;
-import com.benmu.framework.manager.ManagerFactory;
-import com.benmu.framework.manager.impl.ParseManager;
-import com.benmu.framework.model.WeexEventBean;
-import com.benmu.wxbase.EventGate;
+
+import com.eros.framework.adapter.router.RouterTracker;
+import com.eros.framework.manager.ManagerFactory;
+import com.eros.framework.manager.impl.ParseManager;
+import com.eros.framework.model.WeexEventBean;
+import com.eros.wxbase.EventGate;
 import com.taobao.weex.bridge.JSCallback;
 
 /**
